@@ -71,10 +71,15 @@ Note:
         set i (math $i + 1)
     end
 
-    if [ $i -gt (count $args) ]
+    if test $i -gt (count $args)
+      if test (git rev-parse --show-toplevel 2>/dev/null)
+        cd (git rev-parse --show-toplevel)
+      else
         cd ..
-        pwd
-        return 0
+      end
+
+      pwd
+      return 0
     end
 
     switch "$opts"
